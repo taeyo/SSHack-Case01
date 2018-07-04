@@ -24,7 +24,6 @@ namespace sshack
             string fileName = $"{info.Command.FromTime.ToString("yyyyMMddHHmmss")}.json";
             string outputLocation = $"{info.RequestID}/{fileName}";
 
-            log.LogInformation($"[INFO] Queue MSG : {info}");
             var records = populateData(info.RequestID, 200000);
 
             log.LogInformation($"[INFO] {fileName} Started : {DateTime.Now.ToString()}");

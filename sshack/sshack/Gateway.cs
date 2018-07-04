@@ -15,19 +15,21 @@ namespace sshack
     {
         [FunctionName("Gateway")]
         public static async Task<HttpResponseMessage> Run([
-            HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequestMessage req,
+            HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]HttpRequestMessage req,
             [Queue("request-queue")] IAsyncCollector<BaseInfo> requestQueue,
             ILogger log)
         {
             RequestInfo requestInfo = await req.Content.ReadAsAsync<RequestInfo>();
-
             List<BaseInfo> commands = GetDateTimePairs(requestInfo);
 
-            try { 
+            try {
+                log.LogInformation($"[INFO] Started to send message : {requestInfo.RequestID}");
                 foreach (var item in commands){
                     await requestQueue.AddAsync(item);
                 }
-            }catch(Exception ex)
+                log.LogInformation($"[INFO] Ended to send message : {requestInfo.RequestID}");
+            }
+            catch(Exception ex)
             {
                 //log.Error($"[ERROR] : {ex.InnerException.Message}");
                 return req.CreateResponse(HttpStatusCode.BadRequest, ex.ToString());
