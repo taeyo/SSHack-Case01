@@ -64,7 +64,8 @@ namespace sshack
                     {
                         FromTime = currentFromDate,
                         ToTime = currentToDate
-                    }
+                    },
+                    RecordCount = info.RecordCount
                 });
             }
 
