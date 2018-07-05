@@ -21,11 +21,10 @@ namespace sshack
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "requestid/{requestid}")]HttpRequestMessage req,
             //[Blob("{requestid}", FileAccess.Read)] CloudBlobContainer blobContainer,
             string requestid,
-            ILogger log
-            )
+            ILogger log)
         {
-            string constr = Environment.GetEnvironmentVariable("sshack-blob-connection");
-            
+            string constr = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
+
             string div = req.GetQueryNameValuePairs()
                 .FirstOrDefault(q => string.Compare(q.Key, "div", true) == 0)
                 .Value;
@@ -40,7 +39,7 @@ namespace sshack
             CloudBlobContainer blobContainer = blobClient.GetContainerReference(requestid);
             if (!blobContainer.Exists())
             {
-                return req.CreateResponse(HttpStatusCode.BadRequest, "Blob Container isn't exist.");
+                return req.CreateResponse(HttpStatusCode.BadRequest, "Blob Container doesn't exist yet");
             }
 
             BlobContinuationToken continuationToken = new BlobContinuationToken();

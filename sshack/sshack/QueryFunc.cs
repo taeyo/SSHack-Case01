@@ -16,6 +16,7 @@ namespace sshack
     public static class QueryFunc
     {
         [FunctionName("QueryFunc")]
+        //[StorageAccount("sshack-blob-connection")]
         public static async Task Run(
             [QueueTrigger("request-queue")]BaseInfo info,
             Binder binder,
