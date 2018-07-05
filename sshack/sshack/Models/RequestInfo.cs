@@ -10,6 +10,7 @@ namespace sshack
     {
         public string RequestID { get; set; }
         public QueryCommand Command { get; set; }
+        public int RecordCount { get; set; }
     }
 
     public class RequestInfo : BaseInfo

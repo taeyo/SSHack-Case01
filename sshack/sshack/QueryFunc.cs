@@ -25,7 +25,8 @@ namespace sshack
             string fileName = $"{info.Command.FromTime.ToString("yyyyMMddHHmmss")}.json";
             string outputLocation = $"{info.RequestID}/{fileName}";
 
-            var records = populateData(info.RequestID, 200000);
+            if (info.RecordCount == 0) info.RecordCount = 200000;
+            var records = populateData(info.RequestID, info.RecordCount);
 
             log.LogInformation($"[INFO] {fileName} Started : {DateTime.Now.ToString()}");
             #region JsonSerialize and Create Blob
