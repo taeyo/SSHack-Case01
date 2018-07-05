@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebTest Name="RequestTask" Id="b18cecf5-f59f-4686-ae3d-ed11895bf9f5" Owner="" Priority="2147483647" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="0" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="" ResultsLocale="">
+  <Items>
+    <Request Method="POST" Guid="350fc628-60b0-4b49-86cb-bc268eaf7c75" Version="1.1" Url="https://sshack-case01.azurewebsites.net/api/Gateway" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <QueryStringParameters>
+        <QueryStringParameter Name="code" Value="Kis8Cs4ZbSIcyvzP0stbjdWGNQQraj/y/fF9mnJuNsfmUvlXa8LjjQ==" RecordedValue="" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+      <StringHttpBody ContentType="application/json" InsertByteOrderMark="False">ewAgACIAUgBlAHEAdQBlAHMAdABJAEQAIgAgADoAIAAiAHsAewBsAG8AbwBwAEMAbwB1AG4AdAB9AH0ALQB7AHsAUgBlAHEAdQBlAHMAdABJAEQAfQB9ACIALAAKACAAIgBDAG8AbQBtAGEAbgBkACIAOgAgAHsACgAgACIARgByAG8AbQBUAGkAbQBlACIAOgAiADIAMAAxADgALQAwADcALQAwADEAIAAwADAAOgAwADAAOgAwADAAIgAsAAoAIAAiAFQAbwBUAGkAbQBlACIAOgAiADIAMAAxADgALQAwADcALQAwADEAIAAxADAAOgAwADAAOgAwADAAIgAKACAAfQAsAAoAIAAiAEQAaQB2ACIAIAA6ACAAIgAxADAAIgAKAH0A</StringHttpBody>
+    </Request>
+  </Items>
+  <ContextParameters>
+    <ContextParameter Name="RequestID" Value="0000-c212-4a45-8bd5-afb248ab0e1c" />
+  </ContextParameters>
+</WebTest>

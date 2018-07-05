@@ -24,9 +24,14 @@ namespace sshack
 
             try {
                 log.LogInformation($"[INFO] Started to send message : {requestInfo.RequestID}");
-                foreach (var item in commands){
-                    await requestQueue.AddAsync(item);
+                //foreach (var item in commands){
+                //    await requestQueue.AddAsync(item);
+                //}
+                for (int i = 0; i < 10; i++)
+                {
+                    await requestQueue.AddAsync(commands[i]);
                 }
+
                 log.LogInformation($"[INFO] Ended to send message : {requestInfo.RequestID}");
             }
             catch(Exception ex)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
+using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace sshack
@@ -17,10 +19,13 @@ namespace sshack
         [FunctionName("CheckProgress")]
         public static async Task<HttpResponseMessage> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "requestid/{requestid}")]HttpRequestMessage req,
-            [Blob("{requestid}", FileAccess.Read)] CloudBlobContainer blobContainer,
+            //[Blob("{requestid}", FileAccess.Read)] CloudBlobContainer blobContainer,
             string requestid,
-            ILogger log)
+            ILogger log
+            )
         {
+            string constr = Environment.GetEnvironmentVariable("sshack-blob-connection");
+            
             string div = req.GetQueryNameValuePairs()
                 .FirstOrDefault(q => string.Compare(q.Key, "div", true) == 0)
                 .Value;
@@ -28,6 +33,14 @@ namespace sshack
             if (string.IsNullOrEmpty(div))
             {
                 return req.CreateResponse(HttpStatusCode.BadRequest, "Please pass a 'div' on the query string");
+            }
+
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(constr);
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer blobContainer = blobClient.GetContainerReference(requestid);
+            if (!blobContainer.Exists())
+            {
+                return req.CreateResponse(HttpStatusCode.BadRequest, "Blob Container isn't exist.");
             }
 
             BlobContinuationToken continuationToken = new BlobContinuationToken();
@@ -41,7 +54,7 @@ namespace sshack
             while (continuationToken != null);
 
             var list = new List<string>();
-            foreach(CloudBlob item in results)
+            foreach (CloudBlob item in results)
             {
                 list.Add($"{requestid}/{item.Name}");
             }
